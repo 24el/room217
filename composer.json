@@ -6,6 +6,8 @@
     "type": "project",
     "license": "BSD-3-Clause",
 	"yiisoft/yii2-jui": "~2.0.0",
+	"fxp/composer-asset-plugin": "*",
+		"ext-gd": "*",
     "support": {
         "issues": "https://github.com/yiisoft/yii2/issues?state=open",
         "forum": "http://www.yiiframework.com/forum/",
@@ -27,7 +29,9 @@
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
-        "yiisoft/yii2-faker": "*"
+        "yiisoft/yii2-faker": "*",
+		"fxp/composer-asset-plugin": "*",
+		"ext-gd": "*"
     },
     "config": {
         "process-timeout": 1800
