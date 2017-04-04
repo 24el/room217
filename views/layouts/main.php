@@ -1,6 +1,5 @@
 <?php
 
-/* @var $this \yii\web\View */
 /* @var $content string */
 
 use yii\bootstrap\Html;
@@ -23,7 +22,7 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?php $this->registerJsFile('assets/c1a6917c/jquery.js');
+<?php
 $this->registerJsFile('js/city.js');
 $this->registerCssFile('css/site.css');?>
 <div class="wrap">
