@@ -19,6 +19,14 @@ $this->registerJsFile('js/commentEdit.js');
                 <img src="<?=Yii::$app->request->baseUrl?>/images/logos/user_logo_1.png" class="img-circle" height="128" width="128"></p>
             <?php } ?>
             <p class="text-primary text-center">Name:<p class="text-danger text-center"><?=Yii::$app->user->identity->name?></p></p>
+            <p class="text-primary text-center">Last name:<p class="text-danger text-center"><?=Yii::$app->user->identity->lastname?></p></p>
+            <p class="text-primary" style="margin-left: 10px;">Customer rating: <?= isset(Yii::$app->user->identity->customer_rating) ? Yii::$app->user->identity->customer_rating : 0?>
+                <span class="badge"><?= $countUserOrd ?></span>
+            </p>
+
+            <p class="text-primary" style="margin-left: 10px;">Employee rating: <?= $user->employee_rating ? $user->emoloyee_rating : 0?>
+                <span class="badge"><?= $countEmplOrd ?></span>
+            </p>
         </div>
     </div>
     <div class="col-lg-8">

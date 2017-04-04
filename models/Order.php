@@ -47,9 +47,10 @@ class Order extends Model{
 
         if($order->save()){
             if($this->addItems($this->getItems())){
-                return $order;
+                return true;
             }
         }
+        return false;
 
     }
 
@@ -64,7 +65,7 @@ class Order extends Model{
                 }
             }
         }
-            return false;
+        return true;
     }
 
     public static function getOrderById($id){

@@ -39,7 +39,7 @@ $this->registerCssFile('css/site.css');?>
         'items' => [
             ['label' => 'Orders', 'url' => ['/orders/active_orders']],
             ['label' => 'My orders', 'url' => ['orders/my_orders']],
-            ['label' => 'Contact', 'url' => ['/delivery/about']],
+            ['label' => 'About', 'url' => ['/delivery/about']],
         ],
     ]);
     if(Yii::$app->user->isGuest){
@@ -84,7 +84,7 @@ $this->registerCssFile('css/site.css');?>
     </div>
     </div>
         <div class="navbar-nav navbar-right">
-            <?
+            <?php
 
             $form = \yii\bootstrap\ActiveForm::begin([
                 'id' => 'cityForm',

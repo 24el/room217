@@ -68,7 +68,7 @@ class DeliveryController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect('?r=orders%2Factive_orders');
     }
 
     public function actionEntry(){
@@ -178,6 +178,8 @@ class DeliveryController extends Controller
                 'sendEmplComm' => $sendEmplComments,
                 'sendCustComm' => $sendCustComments,
                 'userOrders' => $userOrders,
+                'countUserOrd' => Order::countUserDoneOrders(Yii::$app->user->identity->id),
+                'countEmplOrd' => Order::countEmplUserOrders(Yii::$app->user->identity->id),
                 'deliveryModel' => $model
             ]);
     }
@@ -186,26 +188,9 @@ class DeliveryController extends Controller
      *
      * @return string
      */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
     public function actionAbout()
     {
         return $this->render('about');
     }
+
 }
