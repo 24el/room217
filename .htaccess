@@ -1,4 +1,3 @@
-Options +FollowSymlinks 
 RewriteEngine On 
 
 RewriteCond %{REQUEST_URI} !^/web/(assets|css|js|pdf|img)/ 
