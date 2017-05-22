@@ -1,7 +1,6 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-$baseUrl = str_replace('/web', '', (new \yii\web\Request)->getBaseUrl());
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -29,20 +28,19 @@ $config = [
         ],
         'db' => require(__DIR__ . '/db.php'),
         
-         'assetManager' => [
+         /*'assetManager' => [
             'baseUrl' => '/web',
 			
-        ],
+        ],*/
         'request' => [
-           'baseUrl' => $baseUrl,
 		   'cookieValidationKey' => '1231232',
         ],
-       'urlManager' => [
+       /*'urlManager' => [
 			'baseUrl' => $baseUrl,
             'showScriptName' => false,
             'enablePrettyUrl' => true,
             
-        ],
+        ],*/
     ],
     'params' => $params,
 ];
