@@ -1,7 +1,7 @@
 Options +FollowSymlinks 
 RewriteEngine On 
 
-RewriteCond %{REQUEST_URI} !^/(assets|css|js|pdf|img)/
+RewriteCond %{REQUEST_URI} !^/web/(assets|css|js|pdf|img)/
 RewriteCond %{REQUEST_URI} !index.php 
 RewriteCond %{REQUEST_FILENAME} !-f [OR] 
 RewriteCond %{REQUEST_FILENAME} !-d 
