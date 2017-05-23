@@ -69,7 +69,7 @@ $this->registerJsFile('js/rating.js');
                 if($request->status == null && $order->orders_users->status == 1){continue;}
                 ?>
                 <div class="panel panel-default" style="padding: 5px;">
-                   <h4 class="requestTitle bottom-lined"> Request from <a class="text-primary" href="?r=delivery%2Fprofile&id=<?=$request->userId?>"><?= $request->login; ?></a>
+                   <h4 class="requestTitle bottom-lined"> Request from <a class="text-primary" href="delivery/profile&id=<?=$request->userId?>"><?= $request->login; ?></a>
 
                        <?php
                        if(!(isset($request->status)) && !$isRRequestSend){
@@ -119,7 +119,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-body">
                     <?php $form = \yii\widgets\ActiveForm::begin([
                         'id' => 'addRequest',
-                        'action' => '?r=orders%2Fadd_comment&orderId='.$order->id,
+                        'action' => 'orders/add_comment&orderId='.$order->id,
                     ]);
                     ?>
                     <?= $form->field($commentModel, 'text')->textArea();?>
@@ -155,7 +155,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-body">
                     <?php $form = \yii\widgets\ActiveForm::begin([
                         'id' => 'addRequest',
-                        'action' => '?r=orders%2Frequest',
+                        'action' => 'orders/request',
                     ]);
                     ?>
                     <?= $form->field($requestModel, 'description')->textArea();?>
@@ -188,7 +188,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Submit', '?r=orders%2Ffulfillment_request&orderId='.$order->id , ['class' => 'btn btn-success reverseRequestSubmit']); ?>
+                    <?= Html::a('Submit', 'orders/fulfillment_request&orderId='.$order->id , ['class' => 'btn btn-success reverseRequestSubmit']); ?>
                 </div>
             </div>
 
@@ -214,7 +214,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Confirm', '?r=orders%2Fconfirm_request&orderId='.$order->id, ['class' => 'modalConfirmReqButton btn btn-success']) ?>
+                    <?= Html::a('Confirm', 'orders/confirm_request&orderId='.$order->id, ['class' => 'modalConfirmReqButton btn btn-success']) ?>
                 </div>
             </div>
 
@@ -240,7 +240,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Delete', '?r=orders%2Fdeny_request&orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
+                    <?= Html::a('Delete', 'orders/deny_request&orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
                 </div>
             </div>
 
@@ -266,7 +266,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Delete', '?r=orders%2Ffulfillment_confirm&orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
+                    <?= Html::a('Delete', 'orders/fulfillment_confirm&orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
                 </div>
             </div>
 

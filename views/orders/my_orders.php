@@ -23,7 +23,7 @@ $this->registerJsFile('js/order.js');
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="myOrders">
                 <?php
-                if(isset($myOrders)){
+                if(isset($myOrders[0])){
                 foreach($myOrders as $order){?>
                     <div class="panel panel-default" <?= ($ordersReqNum[$order->id] && $order->orders_users->status != 1) ? 'style="border: 1px solid red"' : null?> >
                         <div class="panel-body">
@@ -36,12 +36,12 @@ $this->registerJsFile('js/order.js');
                                     <ul class="dropdown-menu" aria-labelledby="orderOper">
                                         <li>
                                             <!-- Modal button -->
-                                            <?= Html::a('Delete', '?r=orders%2Fdelete', ['class' => 'orderDelButton', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#myModal']); ?>
+                                            <?= Html::a('Delete', 'orders/delete', ['class' => 'orderDelButton', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#myModal']); ?>
 
 
                                         </li>
                                         <li>
-                                            <?=Html::a('Edit', '?r=orders%2Fedit_order&orderId='.$order->id)?>
+                                            <?=Html::a('Edit', 'orders/edit_order&orderId='.$order->id)?>
                                         </li>
                                     </ul>
                                     <?php }elseif($order->orders_users->status == null){ ?>
@@ -60,7 +60,11 @@ $this->registerJsFile('js/order.js');
                         </div>
                     </div>
                 <? }
-                }
+                }else{
+                    ?> <h2 class="text-center"><small>You havent any orders</small></h2>
+                    <div class="mt-5 text-center" style="margin: 20px 20px 30px auto;"><?= Html::a('Add order', ['orders/add_order'],
+                            ['class' => 'btn btn-success text-center']);?></div>
+                <?}?>
                 ?>
             </div>
             <!-- Order Delete Modal -->
@@ -79,7 +83,7 @@ $this->registerJsFile('js/order.js');
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                            <?= Html::a('Delete', '?r=orders%2Fdelete', ['class' => 'btn btn-danger modalDeleteButton']) ?>
+                            <?= Html::a('Delete', 'orders/delete', ['class' => 'btn btn-danger modalDeleteButton']) ?>
                         </div>
                     </div>
 
@@ -102,7 +106,7 @@ $this->registerJsFile('js/order.js');
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                            <?= Html::a('Delete', '?r=orders%2Fdelete_request', ['class' => 'btn btn-danger modalDeleteRequestButton']) ?>
+                            <?= Html::a('Delete', 'orders/delete_request', ['class' => 'btn btn-danger modalDeleteRequestButton']) ?>
                         </div>
                     </div>
 
@@ -111,37 +115,41 @@ $this->registerJsFile('js/order.js');
 
             <div role="tabpanel" class="tab-pane fade" id="inProcOrders">
                 <?php
-                if(isset($ordersInProc)){
+                if(isset($ordersInProc[0])){
                     foreach($ordersInProc as $order){?>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="text-primary" style="font-size: 20px;"><a href="?r=orders%2Forder&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a></div>
+                                <div class="text-primary" style="font-size: 20px;"><a href="orders/order&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a></div>
                                 <div class="shortDescription">asdsd </div>
                                 <?= \Yii::$app->formatter->asDatetime($order->timePosted); ?>
                             </div>
                         </div>
                     <? }
-                }
+                }else{
+                    ?> <h2 class="text-center"><small>You havent orders in process</small></h2>
+                    <div class="mt-5 text-center" style="margin: 20px 20px 30px auto;"><?= Html::a('Add order', ['orders/add_order'],
+                            ['class' => 'btn btn-success text-center']);?></div>
+                <?}?>
 
                 ?>
                 </div>
             <div role="tabpanel" class="tab-pane fade" id="requestOrders">
                 <?php
-                if(isset($requestOrders)){
+                if(isset($requestOrders[0])){
                     foreach($requestOrders as $order){?>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="text-primary" style="font-size: 20px;"><a href="?r=orders%2Forder&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a>
-                                    <?= Html::a('&times', '?r=orders%2Fdelete_request', ['class' => 'requestDelButton close', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#requestDeleteModal']); ?>
+                                <div class="text-primary" style="font-size: 20px;"><a href="orders/order&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a>
+                                    <?= Html::a('&times', 'orders/delete_request', ['class' => 'requestDelButton close', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#requestDeleteModal']); ?>
                                 </div>
                                 <div class="shortDescription">asdsd </div>
                                 <?= \Yii::$app->formatter->asDatetime($order->timePosted); ?>
                             </div>
                         </div>
-                    <? }
-                }
-
-                ?>
+                    <?}
+                }else{
+                    ?> <h2 class="text-center"><small>You didnt send any request</small></h2>
+                <?}?>
             </div>
         </div>
     </div>

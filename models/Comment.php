@@ -12,7 +12,7 @@ class Comment extends Model{
 
     public function rules(){
         return [
-            ['text' , 'required'],
+            ['text' , 'required', 'string', 'length' => [10, 1000]],
             ['rating', 'integer', 'min' => '0', 'max' => '9']
         ];
     }

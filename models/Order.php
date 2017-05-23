@@ -23,6 +23,9 @@ class Order extends Model{
         return[
             [['title', 'orderDate', 'description', 'startHour', 'endHour', 'startMinutes', 'endMinutes'], 'required'],
             [['price', 'items'], 'safe'],
+            ['title', 'string', 'length' => [6, 150]],
+            ['title', 'string', 'length' => [20, 1000]],
+            ['price', 'integer', 'min' => '1', 'max' => '1000000'],
             [['startHour', 'endHour'], 'integer', 'min' => '1', 'max' => '24'],
             [['startMinutes', 'endMinutes'], 'integer', 'min' => '1', 'max' => '60'],
         ];

@@ -1,0 +1,96 @@
+Yii 2 Basic Project Template is a skeleton \href{http://www.yiiframework.com/}{\tt Yii 2} application best for rapidly creating small projects.
+
+The template contains the basic features including user login/logout and a contact page. It includes all commonly used configurations that would allow you to focus on adding new features to your application.
+
+\href{https://packagist.org/packages/yiisoft/yii2-app-basic}{\tt } \href{https://packagist.org/packages/yiisoft/yii2-app-basic}{\tt } \href{https://travis-ci.org/yiisoft/yii2-app-basic}{\tt }
+
+\subsection*{D\+I\+R\+E\+C\+T\+O\+RY S\+T\+R\+U\+C\+T\+U\+RE }
+
+\begin{DoxyVerb}  assets/             contains assets definition
+  commands/           contains console commands (controllers)
+  config/             contains application configurations
+  controllers/        contains Web controller classes
+  mail/               contains view files for e-mails
+  models/             contains model classes
+  runtime/            contains files generated during runtime
+  tests/              contains various tests for the basic application
+  vendor/             contains dependent 3rd-party packages
+  views/              contains view files for the Web application
+  web/                contains the entry script and Web resources
+\end{DoxyVerb}
+
+
+\subsection*{R\+E\+Q\+U\+I\+R\+E\+M\+E\+N\+TS }
+
+The minimum requirement by this project template that your Web server supports P\+HP 5.\+4.\+0.
+
+\subsection*{I\+N\+S\+T\+A\+L\+L\+A\+T\+I\+ON }
+
+\subsubsection*{Install from an Archive File}
+
+Extract the archive file downloaded from \href{http://www.yiiframework.com/download/}{\tt yiiframework.\+com} to a directory named {\ttfamily basic} that is directly under the Web root.
+
+Set cookie validation key in {\ttfamily config/web.\+php} file to some random secret string\+:
+
+
+\begin{DoxyCode}
+\textcolor{stringliteral}{'request'} => [
+    \textcolor{comment}{// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation}
+    \textcolor{stringliteral}{'cookieValidationKey'} => \textcolor{stringliteral}{'<secret random string goes here>'},
+],
+\end{DoxyCode}
+
+
+You can then access the application through the following U\+RL\+:
+
+
+\begin{DoxyCode}
+http://localhost/basic/web/
+\end{DoxyCode}
+
+
+\subsubsection*{Install via Composer}
+
+If you do not have \href{http://getcomposer.org/}{\tt Composer}, you may install it by following the instructions at \href{http://getcomposer.org/doc/00-intro.md#installation-nix}{\tt getcomposer.\+org}.
+
+You can then install this project template using the following command\+:
+
+
+\begin{DoxyCode}
+php composer.phar global require "fxp/composer-asset-plugin:~1.1.1"
+php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
+\end{DoxyCode}
+
+
+Now you should be able to access the application through the following U\+RL, assuming {\ttfamily basic} is the directory directly under the Web root.
+
+
+\begin{DoxyCode}
+http://localhost/basic/web/
+\end{DoxyCode}
+
+
+\subsection*{C\+O\+N\+F\+I\+G\+U\+R\+A\+T\+I\+ON }
+
+\subsubsection*{Database}
+
+Edit the file {\ttfamily config/db.\+php} with real data, for example\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordflow}{return} [
+    \textcolor{stringliteral}{'class'} => \textcolor{stringliteral}{'yii\(\backslash\)db\(\backslash\)Connection'},
+    \textcolor{stringliteral}{'dsn'} => \textcolor{stringliteral}{'mysql:host=localhost;dbname=yii2basic'},
+    \textcolor{stringliteral}{'username'} => \textcolor{stringliteral}{'root'},
+    \textcolor{stringliteral}{'password'} => \textcolor{stringliteral}{'1234'},
+    \textcolor{stringliteral}{'charset'} => \textcolor{stringliteral}{'utf8'},
+];
+\end{DoxyCode}
+
+
+{\bfseries N\+O\+T\+ES\+:}
+\begin{DoxyItemize}
+\item Yii won\textquotesingle{}t create the database for you, this has to be done manually before you can access it.
+\item Check and edit the other files in the {\ttfamily config/} directory to customize your application as required.
+\item Refer to the R\+E\+A\+D\+ME in the {\ttfamily tests} directory for information specific to basic application tests. 
+\end{DoxyItemize}

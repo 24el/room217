@@ -8,11 +8,14 @@ use Yii;
 
 use yii\base\InvalidValueException;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use app\models\DeliveryOrders;
 use app\models\Order;
 use app\models\Request;
+use yii\web\FailedRequestConfirmException;
 use yii\web\NotFoundHttpException;
+use yii\web\OrderNotFoundException;
 
 class OrdersController extends Controller{
 
@@ -102,7 +105,7 @@ class OrdersController extends Controller{
             'isRRequestConf' => $isRRequestConf
             ]);
         }else{
-            throw new NotFoundHttpException('Order with this id doesnt exist!');
+            throw new OrderNotFoundException('Order with this id doesnt exist!');
         }
     }
 
@@ -113,13 +116,13 @@ class OrdersController extends Controller{
                 if($model->load(Yii::$app->request->post()) && $model->validate()){
                     if($model->addComment($orderId, Yii::$app->user->identity->id)){
                         Yii::$app->session->setFlash('Success', 'Comment successfully send!');
-                        return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                        return $this->redirect('/orders/order&orderId='.$orderId);
                     }
                 }
         }
         else{
             Yii::$app->session->setFlash('Error', 'You havent permission!');
-            return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+            return $this->redirect('/orders/order&orderId='.$orderId);
         }
     }
 
@@ -128,12 +131,12 @@ class OrdersController extends Controller{
         if(Order::isOrderInProcess($orderId) && $model->isRequestConfirmed($orderId)){
             if($model->addRequest($orderId)){
                 Yii::$app->session->setFlash('Success', 'Fullfillment request successfuly send!');
-                return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                return $this->redirect('/orders/order&orderId='.$orderId);
             }
         }
         else{
             Yii::$app->session->setFlash('Error', 'You havent permission!');
-            return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+            return $this->redirect('/orders/order&orderId='.$orderId);
         }
     }
 
@@ -142,8 +145,13 @@ class OrdersController extends Controller{
         if(Order::isUsersOrder($orderId) && $model->isRequestConfirmed($orderId)){
             if($model->confirmReverseRequest($orderId)){
                 Yii::$app->session->setFlash('Success', 'Order successfuly confirmed!');
-                return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                return $this->redirect('/orders/order&orderId='.$orderId);
+            }else{
+                throw new FailedRequestConfirmException("Something went wrong in request confirmation!");
             }
+        }
+        else{
+            throw new BadRequestHttpException;
         }
     }
 
@@ -154,16 +162,16 @@ class OrdersController extends Controller{
                     $orderId = $model->addRequest();
                     if($orderId){
                         Yii::$app->session->setFlash('success', 'Request successfuly send!');
-                        return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                        return $this->redirect('/orders/order&orderId='.$orderId);
                     }
                 }
                 else{
-                    Yii::$app->session->setFlash('Success', 'Request!!! successfuly send!');
-                    return $this->redirect('?r=delivery%2Flogin');
+                    Yii::$app->session->setFlash('Success', 'Request failed to send!');
+                    return $this->redirect('/delivery/login');
                 }
         }
         else{
-            return $this->redirect('?r=delivery%2Flogin');
+            return $this->redirect('/delivery/login');
         }
     }
 
@@ -172,15 +180,15 @@ class OrdersController extends Controller{
             $model = new Request();
             if($model->confirmRequest($requestId)){
                 Yii::$app->session->setFlash('Success', 'Request successfuly confirmed');
-                return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                return $this->redirect('/orders/order&orderId='.$orderId);
             }
             else{
                 Yii::$app->session->setFlash('Error', 'Request was already send!');
-                return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                return $this->redirect('/orders/order&orderId='.$orderId);
             }
         }else{
             Yii::$app->session->setFlash('Error', 'Permission denied!');
-            return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+            return $this->redirect('/orders/order&orderId='.$orderId);
         }
     }
 
@@ -189,13 +197,13 @@ class OrdersController extends Controller{
             $model = new Request;
             if($model->denyRequest($requestId)){
                 Yii::$app->session->setFlash('Success', 'Request successfuly denied');
-                return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                return $this->redirect('/orders/order&orderId='.$orderId);
             }else{
                 Yii::$app->session->setFlash('Error', 'Request was already denied!');
-                return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+                return $this->redirect('/orders/order&orderId='.$orderId);
             }
         Yii::$app->session->setFlash('Error', 'Permission denied!');
-        return $this->redirect('?r=orders%2Forder&orderId='.$orderId);
+        return $this->redirect('/orders/order&orderId='.$orderId);
         }
     }
 
@@ -232,7 +240,7 @@ class OrdersController extends Controller{
                 'ordersReqNum' => $ordersReqNum
             ]);
         }else{
-            return $this->redirect('?r=delivery%2Flogin');
+            return $this->redirect('/delivery/login');
         }
     }
 
@@ -242,16 +250,16 @@ class OrdersController extends Controller{
             if(!Order::isOrderInProcess($orderId)){
                 if($model->deleteOrderById($orderId)){
                     Yii::$app->session->setFlash('orderDelete', 'Order deleted successfully!');
-                    return $this->redirect('?r=orders%2Fmy_orders');
+                    return $this->redirect('/orders/my_orders');
                 }
             }else{
                 Yii::$app->session->setFlash('error', 'You cant delete order in process!!');
-                return $this->redirect('?r=orders%2Fmy_orders');
+                return $this->redirect('/orders/my_orders');
             }
         }
        else{
            Yii::$app->session->setFlash('error', 'You havent permisson!');
-           return $this->redirect('?r=orders%2Fmy_orders');
+           return $this->redirect('/orders/my_orders');
        }
     }
 
@@ -260,7 +268,7 @@ class OrdersController extends Controller{
             $model = new Order();
             if($model->load(Yii::$app->request->post()) && $model->validate()){
                 if($model->addOrder()){
-                    return $this->redirect('?r=orders%2Fmy_orders');
+                    return $this->redirect('orders/my_orders');
                 }
             }
             return $this->render('addOrder.php', [
@@ -268,7 +276,7 @@ class OrdersController extends Controller{
             ]);
         }
         else{
-            return $this->redirect('?r=delivery%2Flogin');
+            return $this->redirect('/delivery/login');
         }
     }
 
@@ -289,7 +297,7 @@ class OrdersController extends Controller{
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             if($model->editOrder($orderId)){
                 Yii::$app->session->setFlash('success', 'Your order successfuly changed!');
-                return $this->redirect('?r=orders%2Fmy_orders');
+                return $this->redirect('/orders/my_orders');
             }
         }
 
@@ -301,6 +309,6 @@ class OrdersController extends Controller{
         if(!Yii::$app->user->isGuest && $model->deleteRequest($orderId)){
             Yii::$app->session->setFlash('success', 'Request successfuly deleted!');
         }
-        return $this->redirect('index.php?r=orders%2Fmy_orders');
+        return $this->redirect('/orders/my_orders');
     }
 }

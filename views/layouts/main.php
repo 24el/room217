@@ -1,5 +1,6 @@
 <?php
 
+/* @var $this \yii\web\View */
 /* @var $content string */
 
 use yii\bootstrap\Html;
@@ -22,9 +23,7 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?php
-$this->registerJsFile('js/city.js');
-$this->registerCssFile('css/site.css');?>
+<?php $this->registerJsFile('assets/c1a6917c/jquery.js');?>
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -36,17 +35,17 @@ $this->registerCssFile('css/site.css');?>
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-left'],
         'items' => [
-            ['label' => 'Orders', 'url' => ['/orders/active_orders']],
+            ['label' => 'Orders', 'url' => ['orders/active_orders']],
             ['label' => 'My orders', 'url' => ['orders/my_orders']],
-            ['label' => 'About', 'url' => ['/delivery/about']],
+            ['label' => 'About', 'url' => ['delivery/about']],
         ],
     ]);
     if(Yii::$app->user->isGuest){
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Registration', 'url' => ['/delivery/registration']],
-            ['label' => 'Login', 'url' => ['/delivery/login']]
+            ['label' => 'Registration', 'url' => ['delivery/registration']],
+            ['label' => 'Login', 'url' => ['delivery/login']]
         ]
     ]);
     }
@@ -63,10 +62,10 @@ $this->registerCssFile('css/site.css');?>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dLabel">
             <li>
-                <?=Html::a('Profile', Yii::$app->homeUrl.'?r=delivery%2Fmy_profile')?>
+                <?=Html::a('Profile', Yii::$app->homeUrl.'delivery/my_profile')?>
             </li>
             <li>
-                <?=Html::a('Logout ('.Yii::$app->user->identity->login.')', '?r=delivery%2Flogout')?>
+                <?=Html::a('Logout ('.Yii::$app->user->identity->login.')', 'delivery/logout')?>
             </li>
             <?php if(isset($ordersReqNum)){ ?>
              <li>

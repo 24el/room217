@@ -15,6 +15,7 @@ use app\models\ContactForm;
 use app\models\EntryForm;
 use app\models\Registration;
 use yii\web\NotFoundHttpException;
+use yii\web\RegistrationFailException;
 use yii\web\User;
 
 class DeliveryController extends Controller
@@ -71,26 +72,7 @@ class DeliveryController extends Controller
         return $this->redirect('?r=orders%2Factive_orders');
     }
 
-    public function actionEntry(){
-        $model = new EntryForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // данные в $model удачно проверены
-
-            // делаем что-то полезное с $model ...
-
-            return $this->render('entry-confirm', ['model' => $model]);
-        } else {
-            // либо страница отображается первый раз, либо есть ошибка в данных
-            return $this->render('entry', ['model' => $model]);
-        }
-    }
-
-    /**
-     * Login action.
-     *
-     * @return string
-     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -99,8 +81,7 @@ class DeliveryController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('index.php?r=delivery/index');
-
+            return $this->redirect($_SERVER['HTTP_REFERER']);
         }
         return $this->render('login', [
             'model' => $model,
@@ -117,7 +98,7 @@ class DeliveryController extends Controller
     public function actionRegistration(){
         $model = new Registration();
 
-        if($model->load(Yii::$app->request->post()) && $model->registrationUser()){
+        if($model->load(Yii::$app->request->post()) && $model->registerUser()){
             return $this->render('successRegistration');
         }
         return $this->render('registration', ['model' => $model]);
@@ -128,7 +109,7 @@ class DeliveryController extends Controller
         if($model->registrationConfirm($regCode)){
             $this->goHome();
         }else{
-            throw new NotFoundHttpException;
+            throw new RegistrationFailException("Registration went wrong! Try again!");
         }
 
     }
@@ -141,7 +122,7 @@ class DeliveryController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->redirect('index.php?r=delivery/index');
+        return $this->redirect('delivery/index');
     }
 
     public function actionProfile($id){
@@ -158,6 +139,8 @@ class DeliveryController extends Controller
                 'countUserOrd' => Order::countUserDoneOrders($id),
                 'countEmplOrd' => Order::countEmplUserOrders($id)
             ]);
+        }else{
+            throw new UserNotFoundException("User with this id doesnt exest!");
         }
     }
 
