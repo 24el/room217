@@ -6,6 +6,7 @@
     "type": "project",
     "license": "BSD-3-Clause",
 	"yiisoft/yii2-jui": "~2.0.0",
+	"yiisoft/yii2-gii": "~2.0.0",
     "support": {
         "issues": "https://github.com/yiisoft/yii2/issues?state=open",
         "forum": "http://www.yiiframework.com/forum/",
