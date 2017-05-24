@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     $(".cityChangeSelect").change(function() {
         var city = $(".cityChangeSelect").val();
-        $(location).attr('href', document.baseURI+'/delivery/city_change?city='+city);
+        $(location).attr('href', '/delivery/city_change?city='+city);
     });
 
 
