@@ -4,7 +4,7 @@ use yii\bootstrap\ActiveForm;
 $this->title = "Orders";
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile('assets/c1a6917c/jquery.js');
-$this->registerJsFile('@web/js/orderAdd.js');
+$this->registerJsFile('js/orderAdd.js');
 ?>
 
 <div class="row">

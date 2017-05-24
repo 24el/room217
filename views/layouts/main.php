@@ -24,6 +24,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <?php $this->registerJsFile('assets/c1a6917c/jquery.js');?>
+<?php $this->registerCssFile('css/site.css');?>
 <div class="wrap">
     <?php
     NavBar::begin([
