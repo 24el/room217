@@ -24,7 +24,8 @@ class DeliveryOrders extends Model{
 
     public function getOrders($sortMethod = null, $date, $time, $price, $search){
 
-            $orders = Orders::find()->select('orders.*, user.customer_rating')->innerJoin('user', 'orders.userId = user.id')->where(['>=', 'orderDate', date('Y-m-d')]);
+            $orders = Orders::find()->select('orders.*, user.customer_rating')->innerJoin('user', 'orders.userId = user.id')
+                ->where(['>=', 'orderDate', date('Y-m-d')]);
 
             if(isset($this->offset)){
                 $orders->offset($this->offset);

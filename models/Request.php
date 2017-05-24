@@ -32,7 +32,7 @@ class Request extends Model{
     }
 
     public function addRequest($orderId = null){
-        if(!Order::isUsersOrder(isset($orderId) ? $orderId : $this->orderId) && !Request::hasUserRequest(isset($orderId) ? $orderId : $this->orderId)){
+        if(!Order::isUsersOrder(isset($orderId) ? $orderId : $this->orderId)){
             $request = new Order_requests();
             $request->order_id = isset($orderId) ? $orderId : $this->orderId;
             $request->user_id = \Yii::$app->user->identity->id;

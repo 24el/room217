@@ -21,7 +21,8 @@
         "yiisoft/yii2-swiftmailer": "*",
 		"yiisoft/yii2-jui": "~2.0.0",
 		"fxp/composer-asset-plugin": "*",
-		"ext-gd": "*"
+		"ext-gd": "*",
+        "codeception/codeception": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

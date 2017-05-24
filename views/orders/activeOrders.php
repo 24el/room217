@@ -7,8 +7,8 @@ use yii\i18n\Formatter;
 
 $this->title = "Orders";
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerJsFile('assets/c1a6917c/jquery.js');
-$this->registerJsFile('js/activeOrders.js');
+$this->registerJsFile('@web/assets/c1a6917c/jquery.js');
+$this->registerJsFile('@web/js/activeOrders.js');
 ?>
 
 <div class="container-fluid">
@@ -65,7 +65,7 @@ $this->registerJsFile('js/activeOrders.js');
         <?php foreach ($orders as $order): ?>
             <div class="panel panel-default" <?= $ordersReqNum[$order->id] ? 'style="border: 1px solid red"' : null?> >
                 <div class="panel-body">
-                    <div class="text-primary" style="font-size: 20px;"><a href="orders/order&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a>
+                    <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a>
                     </div>
                     <hr>
                     <div><?= $order->description ?></div>

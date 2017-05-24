@@ -40,7 +40,7 @@ class Registration extends Model {
      *
      * @return boolean whether the registration form was validated successuly and mail was send.
      */
-    public function registrationUser(){
+    public function registerUser(){
         if($this->validate()){
             $this->reg_code = \Yii::$app->security->generateRandomString(32);
             if($this->sendRegistrationEmail()){
