@@ -81,6 +81,7 @@ class DeliveryController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Yii::$app->session->setFlash('success', 'Welcome '.Yii::$app->user->identity->login.'!');
             return $this->redirect(Yii::$app->user->returnUrl);
         }
         return $this->render('login', [

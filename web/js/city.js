@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     $(".cityChangeSelect").change(function() {
         var city = $(".cityChangeSelect").val();
-        $(location).attr('href', 'https://room217.herokuapp.com/web/delivery/city_change?city='+city);
+        $(location).attr('href', 'http://localhost/basic/web/delivery/city_change?city='+city);
     });
 
 

@@ -3,8 +3,8 @@ use yii\helpers\Html;
 
 $this->title = "Profile";
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerJsFile('assets/c1a6917c/jquery.js');
-$this->registerJsFile('js/order.js');
+$this->registerJsFile('@web/assets/c1a6917c/jquery.js');
+$this->registerJsFile('@web/js/order.js');
 ?>
 
 <div class='row'>
@@ -36,7 +36,7 @@ $this->registerJsFile('js/order.js');
                                     <ul class="dropdown-menu" aria-labelledby="orderOper">
                                         <li>
                                             <!-- Modal button -->
-                                            <?= Html::a('Delete', 'orders/delete', ['class' => 'orderDelButton', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#myModal']); ?>
+                                            <?= Html::a('Delete', 'delete?', ['class' => 'orderDelButton', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#myModal']); ?>
 
 
                                         </li>
@@ -82,14 +82,14 @@ $this->registerJsFile('js/order.js');
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                            <?= Html::a('Delete', 'orders/delete', ['class' => 'btn btn-danger modalDeleteButton']) ?>
+                            <?= Html::a('Delete', 'delete?', ['class' => 'btn btn-danger modalDeleteButton']) ?>
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Order Delete Modal -->
+            <!-- Request Delete Modal -->
             <div class="modal fade" id="requestDeleteModal" role="dialog" style="position:fixed;">
                 <div class="modal-dialog">
 
@@ -105,7 +105,7 @@ $this->registerJsFile('js/order.js');
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                            <?= Html::a('Delete', 'orders/delete_request', ['class' => 'btn btn-danger modalDeleteRequestButton']) ?>
+                            <?= Html::a('Delete', 'delete_request?', ['class' => 'btn btn-danger modalDeleteRequestButton']) ?>
                         </div>
                     </div>
 
@@ -138,7 +138,7 @@ $this->registerJsFile('js/order.js');
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a>
-                                    <?= Html::a('&times', 'orders/delete_request', ['class' => 'requestDelButton close', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#requestDeleteModal']); ?>
+                                    <?= Html::a('&times', \yii\helpers\Url::to('delete_request?'), ['class' => 'requestDelButton close', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#requestDeleteModal']); ?>
                                 </div>
                                 <div class="shortDescription">asdsd </div>
                                 <?= \Yii::$app->formatter->asDatetime($order->timePosted); ?>
