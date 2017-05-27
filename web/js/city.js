@@ -2,7 +2,11 @@ $(document).ready(function(){
 
     $(".cityChangeSelect").change(function() {
         var city = $(".cityChangeSelect").val();
+<<<<<<< HEAD
         $(location).attr('href', document.baseURI+'/delivery/city_change?city='+city);
+=======
+        $(location).attr('href', 'http://localhost/basic/web/delivery/city_change?city='+city);
+>>>>>>> def8989fc1dd8e872e1784ba8778b92e1d803d69
     });
 
 

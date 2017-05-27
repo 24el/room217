@@ -123,7 +123,7 @@ class DeliveryOrders extends Model{
         $orders = array();
         if(isset($ordersId)){
             foreach($ordersId as $orderId){
-                if(Orders_users::find()->where(['status' => null])->andWhere(['order_id' => $orderId])->exists()){
+                if(!Orders_users::find()->where(['status' => '1'])->andWhere(['order_id' => $orderId])->exists()){
                     array_push($orders, Orders::find()->where(['id' => $orderId])->one());
                 }
             }
