@@ -138,11 +138,7 @@ $this->registerJsFile('@web/js/order.js');
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a>
-<<<<<<< HEAD
-                                    <?= Html::a('&times', 'orders/delete_request', ['class' => 'requestDelButton close', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#requestDeleteModal']); ?>
-=======
                                     <?= Html::a('&times', \yii\helpers\Url::to('delete_request?'), ['class' => 'requestDelButton close', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#requestDeleteModal']); ?>
->>>>>>> def8989fc1dd8e872e1784ba8778b92e1d803d69
                                 </div>
                                 <div class="shortDescription">asdsd </div>
                                 <?= \Yii::$app->formatter->asDatetime($order->timePosted); ?>

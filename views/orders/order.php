@@ -4,10 +4,6 @@ use yii\bootstrap\Html;
 $this->title = $order->Title;
 $this->registerJsFile('@web/assets/c1a6917c/jquery.js');
 $this->registerJsFile('@web/js/request.js');
-<<<<<<< HEAD
-$this->registerJsFile('@web/js/request2.js');
-=======
->>>>>>> def8989fc1dd8e872e1784ba8778b92e1d803d69
 $this->registerJsFile('@web/js/rating.js');
 ?>
 <div class="row">
@@ -157,11 +153,7 @@ $this->registerJsFile('@web/js/rating.js');
                     <label>Rating</label>
                     <div class="pull-right rating">
                     <?for($i=0; $i<10; $i++){
-<<<<<<< HEAD
-                        ?><img class="ratingStar" src="@web/images/star.png"  width="20px" height="20px" data-id="<?= $i?>"><?
-=======
                         ?><img class="ratingStar" src="<?=Yii::$app->request->baseUrl?>/images/star.png"  width="20px" height="20px" data-id="<?= $i?>"><?
->>>>>>> def8989fc1dd8e872e1784ba8778b92e1d803d69
                     }?>
                     </div>
                 </div>
@@ -300,11 +292,7 @@ $this->registerJsFile('@web/js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-<<<<<<< HEAD
-                    <?= Html::a('Delete', 'fulfillment_confirm?orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
-=======
                     <?= Html::a('Confirm', 'fulfillment_confirm?orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
->>>>>>> def8989fc1dd8e872e1784ba8778b92e1d803d69
                 </div>
             </div>
 

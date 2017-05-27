@@ -6,14 +6,6 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-	'defaultRoute' => 'orders/active_orders',
-=======
-    'defaultRoute' => 'orders/active_orders',
->>>>>>> def8989fc1dd8e872e1784ba8778b92e1d803d69
->>>>>>> 895f3f38a0623d776ab326161a06979e7656f906
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
