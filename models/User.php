@@ -126,4 +126,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             return false;
         return \Yii::$app->security->validatePassword($password, $this->pass);
     }
+
+    public function checkEmailConfirmation(){
+        if(isset($this->reg_code)){
+            return false;
+        }
+        return true;
+    }
 }

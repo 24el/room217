@@ -8,6 +8,7 @@ use app\models\Order;
 use app\models\Orders;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -100,7 +101,10 @@ class DeliveryController extends Controller
         $model = new Registration();
 
         if($model->load(Yii::$app->request->post()) && $model->registerUser()){
-            return $this->render('successRegistration');
+            Yii::$app->session->setFlash('success', 'Successfull registration!');
+            return $this->redirect(Url::to('login'));
+        }else{
+            Yii::$app->session->setFlash('error', 'Registration fail!');
         }
         return $this->render('registration', ['model' => $model]);
     }
@@ -123,6 +127,18 @@ class DeliveryController extends Controller
     {
         Yii::$app->user->logout();
         return $this->redirect(Yii::$app->user->returnUrl);
+    }
+
+    public function actionRegistration_confirm($regCode){
+        $model = new Registration();
+        if($model->registrationConfirm($regCode)){
+            Yii::$app->session->setFlash('success', 'Registration confirmed!');
+            return $this->redirect(Url::to('login'));
+        }
+        else{
+            Yii::$app->session->setFlash('error', 'Registration confirmation fail!');
+            return $this->redirect(Url::to('login'));
+        }
     }
 
     public function actionProfile($id){

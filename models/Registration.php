@@ -9,26 +9,27 @@ class Registration extends Model {
     public $email;
     public $name;
     public $lastname;
-    public $birthday;
+    public $birthYear;
+    public $birthMonth;
     public $description;
     private $reg_code;
     public function rules(){
         return array(
-            [['login', 'password', 'email', 'name', 'lastname', 'birthday'], 'required'],
+            [['login', 'password', 'email', 'name', 'lastname', 'birthYear', 'birthMonth'], 'required'],
             ['email', 'email'],
-            ['birthday', 'date', 'format' => 'yyyy-M-d'],
+            ['birthYear', 'date', 'format' => 'yyyy'],
             [['login', 'email'] , 'unique', 'targetClass' => 'app\models\User'],
             ['password', 'string', 'length' => [4, 24]],
             [['description'], 'safe'],
         );
     }
 
-    public function sendRegistrationEmail(){
+    public function sendRegistrationEmail($reg_code){
         if(\Yii::$app->mailer->compose()
             ->setTo($this->email)
-            ->setFrom('room217@heroku.com')
+            ->setFrom('betelgeuse1920@gmail.com')
             ->setSubject('Registration')
-            ->setTextBody('Confirm your registration by entering this link http://localhost/basic/web/index.php?r=delivery%2FregistrationConfirm?regCode='.$this->reg_code)
+            ->setTextBody('Confirm your registration by entering the link '.\Yii::$app->homeUrl.'web/delivery/registration_confirm?regCode='.$reg_code)
             ->send()){
                 return true;
         }
@@ -42,17 +43,17 @@ class Registration extends Model {
      */
     public function registerUser(){
         if($this->validate()){
-            $this->reg_code = \Yii::$app->security->generateRandomString(32);
-            if($this->sendRegistrationEmail()){
+            $reg_code = \Yii::$app->security->generateRandomString(30);
+            if($this->sendRegistrationEmail($reg_code)){
                 $user = new \app\models\User();
                 $user->login = $this->login;
                 $user->setPassword($this->password);
                 $user->email = $this->email;
                 $user->name = $this->name;
                 $user->lastname = $this->lastname;
-                $user->birthday = $this->birthday;
-                $user->auth_key = \Yii::$app->security->generateRandomString(32);
-                $user->reg_code = $this->reg_code;
+                $user->birthday = $this->birthYear.'-'.$this->birthMonth;
+                $user->auth_key = \Yii::$app->security->generateRandomString(30);
+                $user->reg_code = $reg_code;
                 $user->registration_date = date('Y-m-d H:i:s');
                 $user->save();
                 return true;
@@ -63,8 +64,9 @@ class Registration extends Model {
 
     public function registrationConfirm($regCode){
         $user = User::findOne(['reg_code' => $regCode]);
-        if($user->id){
+        if(isset($user)){
             unset($user->reg_code);
+            $user->save();
             return true;
         }
         return false;

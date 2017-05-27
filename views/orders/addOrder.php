@@ -50,8 +50,6 @@ $this->registerJsFile('@web/js/orderAdd.js');
         <?= $form->field($model, 'description')->textarea();?>
         <?= $form->field($model, 'price')->textInput(['placeholder' => 'Negotiable']); ?>
         <?= $form->field($model, 'items')->hiddenInput(['class' => ' itemsField'])->label('Items', ['class' => 'hidden']); ?>
-        <div class="text-center"><?= \yii\bootstrap\Html::submitButton('Add Order', ['class' => 'addOrderButton btn btn-primary']); ?></div>
-
     </div>
     <div class="col-lg-5">
         <h2 class="text-center"><small>Items</small></h2>
@@ -66,5 +64,8 @@ $this->registerJsFile('@web/js/orderAdd.js');
          </div>
         <p class="text-center"><p class="itemAddButton btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></p>
     </div>
+</div>
+<div class="row">
+    <div class="text-center"><?= \yii\bootstrap\Html::submitButton('Add Order', ['class' => 'addOrderButton btn btn-primary']); ?></div>
     <?ActiveForm::end();?>
 </div>

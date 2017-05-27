@@ -8,5 +8,5 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost/basic/web/orders/add_order
+            url: http://room217.herokuapp.com/web/
         - \Helper\Acceptance

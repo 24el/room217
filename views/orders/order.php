@@ -6,7 +6,7 @@ $this->registerJsFile('@web/assets/c1a6917c/jquery.js');
 $this->registerJsFile('@web/js/request.js');
 $this->registerJsFile('@web/js/rating.js');
 ?>
-<div class="row" xmlns="http://www.w3.org/1999/html">
+<div class="row">
 <div class="col-sm-8">
       <hr>
       <div class="shortProfile">
@@ -58,55 +58,78 @@ $this->registerJsFile('@web/js/rating.js');
           <h4><small>Order date: </small><?= $order->orderDate?> <small>Starts at:</small> <?= $order->timeMin?> <small>Ends at:</small> <?= $order->timeMax ?></h4>
       </div>
       <hr>
-
-    <div class="request">
-
-        <?php
-        if(!$isRRequestSend && $isUsersOrder){
-            ?><h2 class="text-center"><small>Requests</small></h2> <?
-            if(isset($requests[0])){
-            foreach($requests as $request){
-                if($request->status == null && $order->orders_users->status == 1){continue;}
-                ?>
-                <div class="panel panel-default" style="padding: 5px;">
-                   <h4 class="requestTitle bottom-lined"> Request from <a class="text-primary" href="delivery/profile&id=<?=$request->userId?>"><?= $request->login; ?></a>
-
-                       <?php
-                       if(!(isset($request->status)) && !$isRRequestSend){
-
-                       ?>
-                       <? if(!$isOrderInProc){?>
-                       <button class="requestConfirmButton btn btn-success pull-right" data-id='<?=$request->id;?>' data-toggle = 'modal' data-target = '#requestConfirmModal' style="float:left;">Confirm request</button>
-                       <? } ?>
-                        <button class="requestCancelButton btn btn-danger pull-right" data-id='<?=$request->id;?>' data-toggle = 'modal' data-target = '#requestCancelModal' >Deny request</button></h4>
-                           <?} elseif($request->status=='accept'){
-                           ?>
-                           <p class="pull-right text">Request Confirmed</p>
-                       <?
-                       } else{
-                           ?>
-                           <p class="pull-right text">Request canceled</p>
-                           <?
-                       }
-                       ?>
-                   <hr>
-                   <div class="request-body">
-                       <?= $request->description; ?>
-                   </div>
-                  <hr>
-                    <div class="request-footer">
-                        <?= $request->timePosted; ?>
-                    </div>
-
-                </div>
-            <?
-            }
-            } else{
-                ?><h3 class="text-center"><small>Your order havent any request</small></h3> <?
-            }
-        }?>
-    </div>
 </div>
+
+    <div class="col-sm-4">
+        <h2 class="text-center"><small>Delivery Items</small></h2>
+        <?php if(isset($order->items)){ ?>
+            <div class="orderItems">
+                <ul class="list-group">
+                    <?php
+                    foreach($order->items as $item){
+                        ?><li class="list-group-item"><?= $item->description ?></li><?
+                    }
+                    ?>
+                </ul>
+            </div>
+        <?php
+        }else{
+            ?><h3 class="text-center"><small>Items not set</small></h3><?
+        }
+        ?>
+    </div>
+    </div>
+<div class="row">
+    <div class="col-sm-8">
+        <div class="request">
+
+                <?php
+                if(!$isRRequestSend && $isUsersOrder){
+                    ?><h2 class="text-center"><small>Requests</small></h2> <?
+                    if(isset($requests[0])){
+                    foreach($requests as $request){
+                        if($request->status == null && $order->orders_users->status == 1){continue;}
+                        ?>
+                        <div class="panel panel-default" style="padding: 5px;">
+                           <h4 class="requestTitle bottom-lined"> Request from <a class="text-primary" href="delivery/profile&id=<?=$request->userId?>"><?= $request->login; ?></a>
+
+                               <?php
+                               if(!(isset($request->status)) && !$isRRequestSend){
+
+                               ?>
+                               <? if(!$isOrderInProc){?>
+                               <button class="requestConfirmButton btn btn-success pull-right" data-id='<?=$request->id;?>' data-toggle = 'modal' data-target = '#requestConfirmModal' style="float:left;">Confirm request</button>
+                               <? } ?>
+                                <button class="requestCancelButton btn btn-danger pull-right" data-id='<?=$request->id;?>' data-toggle = 'modal' data-target = '#requestCancelModal' >Deny request</button></h4>
+                                   <?} elseif($request->status=='accept'){
+                                   ?>
+                                   <p class="pull-right text">Request Confirmed</p>
+                               <?
+                               } else{
+                                   ?>
+                                   <p class="pull-right text">Request canceled</p>
+                                   <?
+                               }
+                               ?>
+                           <hr>
+                           <div class="request-body">
+                               <?= $request->description; ?>
+                           </div>
+                          <hr>
+                            <div class="request-footer">
+                                <?= $request->timePosted; ?>
+                            </div>
+
+                        </div>
+                    <?
+                    }
+                    } else{
+                        ?><h3 class="text-center"><small>Your order havent any request</small></h3> <?
+                    }
+                }?>
+            </div>
+        </div>
+    </div>
 
 <?if($order->orders_users->status == 1 && ($order->orders_users->user->id == Yii::$app->user->identity->id || $isUsersOrder) && isset($commentModel)){?>
     <!-- Comment Modal -->
@@ -275,22 +298,4 @@ $this->registerJsFile('@web/js/rating.js');
 
         </div>
     </div>
-<div class="col-sm-4">
-    <h2 class="text-center"><small>Delivery Items</small></h2>
-    <?php if(isset($order->items)){ ?>
-    <div class="orderItems">
-        <ul class="list-group">
-           <?php
-           foreach($order->items as $item){
-               ?><li class="list-group-item"><?= $item->description ?></li><?
-           }
-           ?>
-        </ul>
-    </div>
-    <?php
-    }else{
-        ?><h3 class="text-center"><small>Items not set</small></h3><?
-    }
-    ?>
-</div>
 </div>

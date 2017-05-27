@@ -25,6 +25,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <?php $this->registerJsFile('@web/assets/c1a6917c/jquery.js');?>
 <?php $this->registerJsFile('@web/js/city.js');?>
+<?php $this->registerJsFile('@web/js/deviceCheck.js');?>
 <div class="wrap">
     <?php
     NavBar::begin([
