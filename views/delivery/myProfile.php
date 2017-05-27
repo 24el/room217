@@ -44,7 +44,7 @@ $this->registerJsFile('js/commentEdit.js');
                     foreach($doneOrders as $order){?>
                         <div class="panel panel-default" <?= $ordersReqNum[$order->id] ? 'style="border: 1px solid red"' : null?> >
                             <div class="panel-body">
-                                <div class="text-primary" style="font-size: 20px;"><a href="?r=orders%2Forder&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a>
+                                <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a>
                                 </div>
                                 <hr>
                                 <div><?= $order->description ?></div>
@@ -67,7 +67,7 @@ $this->registerJsFile('js/commentEdit.js');
                     foreach($userOrders as $order){ ?>
                         <div class="panel panel-default" <?= $ordersReqNum[$order->id] ? 'style="border: 1px solid red"' : null?> >
                             <div class="panel-body">
-                                <div class="text-primary" style="font-size: 20px;"><a href="?r=orders%2Forder&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a>
+                                <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a>
                                 </div>
                                 <hr>
                                 <div><?= $order->description ?></div>
@@ -108,10 +108,10 @@ $this->registerJsFile('js/commentEdit.js');
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="col-sm-2 text-center">
-                                    <?php if(file_exists('images/avatars/'.$comm->creatorUser->login.'_1.png')){?>
-                                        <img src="images/avatars/<?=$comm->creatorUser->login?>_1.png" class="img-circle" height="65" width="65" alt="Avatar">
+                                    <?php if(file_exists(Yii::$app->request->baseUrl.'/images/avatars/'.$comm->creatorUser->login.'_1.png')){?>
+                                        <img src="<?=Yii::$app->request->baseUrl?>/images/avatars/<?=$comm->creatorUser->login?>_1.png" class="img-circle" height="65" width="65" alt="Avatar">
                                     <?}else{?>
-                                        <img src="images/logos/user_logo_1.png" class="img-circle" height="65" width="65" alt="Avatar">
+                                        <img src="<?=Yii::$app->request->baseUrl?>/images/logos/user_logo_1.png" class="img-circle" height="65" width="65" alt="Avatar">
                                     <?}?>
                                 </div>
                                 <div class="col-sm-10">
@@ -120,7 +120,7 @@ $this->registerJsFile('js/commentEdit.js');
                                     <br>
                                     <p class="text-left"><h4 class="text-warning">Order: <?= $comm->order->Title; ?>
                                         <p class="pull-right">Rating: <? for($i=1; $i <= $comm->rating; $i++){
-                                                ?><img src="images/gold_star.png" width="20px" height="20px" data-id="<?=$i;?>"><?
+                                                ?><img src="<?=Yii::$app->request->baseUrl?>/images/gold_star.png" width="20px" height="20px" data-id="<?=$i;?>"><?
                                             }
                                             ?></p></h4></p>
                                 </div>
@@ -142,9 +142,9 @@ $this->registerJsFile('js/commentEdit.js');
                             <div class="panel-body">
                                 <div class="col-sm-2 text-center">
                                     <?php if(file_exists('images/avatars/'.$comm->creatorUser->login.'_1.png')){?>
-                                        <img src="images/avatars/<?=$comm->creatorUser->login?>_1.png" class="img-circle" height="65" width="65" alt="Avatar">
+                                        <img src="<?=Yii::$app->request->baseUrl?>/images/avatars/<?=$comm->creatorUser->login?>_1.png" class="img-circle" height="65" width="65" alt="Avatar">
                                     <?}else{?>
-                                        <img src="images/logos/user_logo_1.png" class="img-circle" height="65" width="65" alt="Avatar">
+                                        <img src="<?=Yii::$app->request->baseUrl?>/images/logos/user_logo_1.png" class="img-circle" height="65" width="65" alt="Avatar">
                                     <?}?>
                                 </div>
                                 <div class="col-sm-10">
@@ -153,7 +153,7 @@ $this->registerJsFile('js/commentEdit.js');
                                     <br>
                                     <p class="text-left"><h4 class="text-warning">Order: <?= $comm->order->Title; ?>
                                         <p class="pull-right">Rating: <? for($i=1; $i <= $comm->rating; $i++){
-                                                ?><img src="images/gold_star.png" width="20px" height="20px" data-id="<?=$i;?>"><?
+                                                ?><img src="<?=Yii::$app->request->baseUrl?>/images/gold_star.png" width="20px" height="20px" data-id="<?=$i;?>"><?
                                             }
                                             ?></p></h4></p>
                                 </div>
@@ -174,10 +174,10 @@ $this->registerJsFile('js/commentEdit.js');
                         <div class="panel panel-default sendEmplComm" data-id="<?= $comm->id ?>">
                             <div class="panel-body">
                                 <div class="col-sm-2 text-center">
-                                    <?php if(file_exists('images/avatars/'.$comm->creatorUser->login.'_1.png')){?>
-                                        <img src="images/avatars/<?=$comm->creatorUser->login?>_1.png" class="img-circle" height="65" width="65" alt="Avatar">
+                                    <?php if(file_exists(Yii::$app->request->baseUrl.'/images/avatars/'.$comm->creatorUser->login.'_1.png')){?>
+                                        <img src="<?=Yii::$app->request->baseUrl?>/images/avatars/<?=$comm->creatorUser->login?>_1.png" class="img-circle" height="65" width="65" alt="Avatar">
                                     <?}else{?>
-                                        <img src="images/logos/user_logo_1.png" class="img-circle" height="65" width="65" alt="Avatar">
+                                        <img src="<?=Yii::$app->request->baseUrl?>/images/logos/user_logo_1.png" class="img-circle" height="65" width="65" alt="Avatar">
                                     <?}?>
                                 </div>
                                 <div class="col-sm-10">
@@ -201,7 +201,7 @@ $this->registerJsFile('js/commentEdit.js');
                                     <br>
                                     <p class="text-left"><h4 class="text-warning">Order: <?= $comm->order->Title; ?>
                                         <p class="pull-right">Rating: <? for($i=1; $i <= $comm->rating; $i++){
-                                                ?><img src="images/gold_star.png" width="20px" height="20px" data-id="<?=$i;?>"><?
+                                                ?><img src="<?=Yii::$app->request->baseUrl?>/images/gold_star.png" width="20px" height="20px" data-id="<?=$i;?>"><?
                                             }
                                             ?></p></h4></p>
                                 </div>

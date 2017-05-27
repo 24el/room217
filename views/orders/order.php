@@ -2,10 +2,10 @@
 use yii\bootstrap\Html;
 
 $this->title = $order->Title;
-$this->registerJsFile('assets/c1a6917c/jquery.js');
-$this->registerJsFile('js/request.js');
-$this->registerJsFile('js/request2.js');
-$this->registerJsFile('js/rating.js');
+$this->registerJsFile('@web/assets/c1a6917c/jquery.js');
+$this->registerJsFile('@web/js/request.js');
+$this->registerJsFile('@web/js/request2.js');
+$this->registerJsFile('@web/js/rating.js');
 ?>
 <div class="row" xmlns="http://www.w3.org/1999/html">
 <div class="col-sm-8">
@@ -63,8 +63,9 @@ $this->registerJsFile('js/rating.js');
     <div class="request">
 
         <?php
-        if(isset($requests) && !$isRRequestSend){
+        if(!$isRRequestSend && $isUsersOrder){
             ?><h2 class="text-center"><small>Requests</small></h2> <?
+            if(isset($requests[0])){
             foreach($requests as $request){
                 if($request->status == null && $order->orders_users->status == 1){continue;}
                 ?>
@@ -101,6 +102,9 @@ $this->registerJsFile('js/rating.js');
                 </div>
             <?
             }
+            } else{
+                ?><h3 class="text-center"><small>Your order havent any request</small></h3> <?
+            }
         }?>
     </div>
 </div>
@@ -119,7 +123,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-body">
                     <?php $form = \yii\widgets\ActiveForm::begin([
                         'id' => 'addRequest',
-                        'action' => 'orders/add_comment&orderId='.$order->id,
+                        'action' => 'add_comment?orderId='.$order->id,
                     ]);
                     ?>
                     <?= $form->field($commentModel, 'text')->textArea();?>
@@ -127,7 +131,7 @@ $this->registerJsFile('js/rating.js');
                     <label>Rating</label>
                     <div class="pull-right rating">
                     <?for($i=0; $i<10; $i++){
-                        ?><img class="ratingStar" src="images/star.png"  width="20px" height="20px" data-id="<?= $i?>"><?
+                        ?><img class="ratingStar" src="@web/images/star.png"  width="20px" height="20px" data-id="<?= $i?>"><?
                     }?>
                     </div>
                 </div>
@@ -155,7 +159,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-body">
                     <?php $form = \yii\widgets\ActiveForm::begin([
                         'id' => 'addRequest',
-                        'action' => 'orders/request',
+                        'action' => 'request',
                     ]);
                     ?>
                     <?= $form->field($requestModel, 'description')->textArea();?>
@@ -188,7 +192,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Submit', 'orders/fulfillment_request&orderId='.$order->id , ['class' => 'btn btn-success reverseRequestSubmit']); ?>
+                    <?= Html::a('Submit', 'fulfillment_request?orderId='.$order->id , ['class' => 'btn btn-success reverseRequestSubmit']); ?>
                 </div>
             </div>
 
@@ -214,7 +218,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Confirm', 'orders/confirm_request&orderId='.$order->id, ['class' => 'modalConfirmReqButton btn btn-success']) ?>
+                    <?= Html::a('Confirm', 'confirm_request?orderId='.$order->id, ['class' => 'modalConfirmReqButton btn btn-success']) ?>
                 </div>
             </div>
 
@@ -240,7 +244,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Delete', 'orders/deny_request&orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
+                    <?= Html::a('Delete', 'deny_request?orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
                 </div>
             </div>
 
@@ -266,7 +270,7 @@ $this->registerJsFile('js/rating.js');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <?= Html::a('Delete', 'orders/fulfillment_confirm&orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
+                    <?= Html::a('Delete', 'fulfillment_confirm?orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-success']) ?>
                 </div>
             </div>
 

@@ -23,7 +23,8 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?php $this->registerJsFile('assets/c1a6917c/jquery.js');?>
+<?php $this->registerJsFile('@web/assets/c1a6917c/jquery.js');?>
+<?php $this->registerJsFile('@web/js/city.js');?>
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -65,7 +66,7 @@ AppAsset::register($this);
                 <?=Html::a('Profile', Yii::$app->homeUrl.'delivery/my_profile')?>
             </li>
             <li>
-                <?=Html::a('Logout ('.Yii::$app->user->identity->login.')', 'delivery/logout')?>
+                <?=Html::a('Logout ('.Yii::$app->user->identity->login.')', Yii::$app->homeUrl.'delivery/logout')?>
             </li>
             <?php if(isset($ordersReqNum)){ ?>
              <li>

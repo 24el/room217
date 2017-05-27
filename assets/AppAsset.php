@@ -22,7 +22,6 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'assets/c1a6917c/jquery.js',
-        'js/cityChange.js',
 
     ];
     public $depends = [

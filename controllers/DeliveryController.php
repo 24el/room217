@@ -81,7 +81,7 @@ class DeliveryController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect($_SERVER['HTTP_REFERER']);
+            return $this->redirect(Yii::$app->user->returnUrl);
         }
         return $this->render('login', [
             'model' => $model,
@@ -91,7 +91,7 @@ class DeliveryController extends Controller
     public function actionCity_change($city){
         if(\app\models\User::cityChange(Yii::$app->user->identity->id, $city)){
             Yii::$app->user->identity->city = $city;
-            return $this->redirect($_SERVER['HTTP_REFERER']);
+            return $this->redirect(Yii::$app->user->returnUrl);
         }
     }
 
@@ -121,8 +121,7 @@ class DeliveryController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
-        return $this->redirect('delivery/index');
+        return $this->redirect(Yii::$app->user->returnUrl);
     }
 
     public function actionProfile($id){

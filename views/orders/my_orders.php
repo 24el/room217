@@ -27,7 +27,7 @@ $this->registerJsFile('js/order.js');
                 foreach($myOrders as $order){?>
                     <div class="panel panel-default" <?= ($ordersReqNum[$order->id] && $order->orders_users->status != 1) ? 'style="border: 1px solid red"' : null?> >
                         <div class="panel-body">
-                            <div class="text-primary" style="font-size: 20px;"><a href="?r=orders%2Forder&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a>
+                            <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a>
                                 <div class="dropdown" style="float:right;">
                                     <?php if($ordersReqNum[$order->id] && $order->orders_users->status != 1){ ?><span class="badge"><?= $ordersReqNum[$order->id] ?></span> <? } ?>
                                     <?php if($order->orders_users == null){ ?>
@@ -41,7 +41,7 @@ $this->registerJsFile('js/order.js');
 
                                         </li>
                                         <li>
-                                            <?=Html::a('Edit', 'orders/edit_order&orderId='.$order->id)?>
+                                            <?=Html::a('Edit', \yii\helpers\Url::to(['orders/edit_order', 'orderId' => $order->id]))?>
                                         </li>
                                     </ul>
                                     <?php }elseif($order->orders_users->status == null){ ?>
@@ -65,7 +65,6 @@ $this->registerJsFile('js/order.js');
                     <div class="mt-5 text-center" style="margin: 20px 20px 30px auto;"><?= Html::a('Add order', ['orders/add_order'],
                             ['class' => 'btn btn-success text-center']);?></div>
                 <?}?>
-                ?>
             </div>
             <!-- Order Delete Modal -->
             <div class="modal fade" id="myModal" role="dialog" style="position:fixed;">
@@ -119,7 +118,7 @@ $this->registerJsFile('js/order.js');
                     foreach($ordersInProc as $order){?>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="text-primary" style="font-size: 20px;"><a href="orders/order&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a></div>
+                                <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a></div>
                                 <div class="shortDescription">asdsd </div>
                                 <?= \Yii::$app->formatter->asDatetime($order->timePosted); ?>
                             </div>
@@ -131,7 +130,6 @@ $this->registerJsFile('js/order.js');
                             ['class' => 'btn btn-success text-center']);?></div>
                 <?}?>
 
-                ?>
                 </div>
             <div role="tabpanel" class="tab-pane fade" id="requestOrders">
                 <?php
@@ -139,7 +137,7 @@ $this->registerJsFile('js/order.js');
                     foreach($requestOrders as $order){?>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="text-primary" style="font-size: 20px;"><a href="orders/order&orderId=<?= $order->id;?>" ><?= Html::encode($order->Title)?></a>
+                                <div class="text-primary" style="font-size: 20px;"><a href="<?= \yii\helpers\Url::to(['orders/order', 'orderId' => $order->id])?>" ><?= Html::encode($order->Title)?></a>
                                     <?= Html::a('&times', 'orders/delete_request', ['class' => 'requestDelButton close', 'data-id' => $order->id,  'data-toggle' => 'modal', 'data-target' => '#requestDeleteModal']); ?>
                                 </div>
                                 <div class="shortDescription">asdsd </div>
