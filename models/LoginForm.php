@@ -50,7 +50,7 @@ class LoginForm extends Model
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
-            if(!$user->checkEmailConfirmation()){
+            if($user && !$user->checkEmailConfirmation()){
                 $this->addError($attribute, 'Activate your account.');
             }
         }
