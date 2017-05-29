@@ -41,12 +41,15 @@ $this->registerJsFile('@web/js/rating.js');
               <button class="btn btn-default pull-right disabled" style="float:left;">Fulfillment request send</button>
           <?}elseif($isRRequestSend && $isUsersOrder){?>
               <button class="btn btn-success pull-right" data-toggle = 'modal' data-target = '#reverseRequestConfModal' style="float:left;">Confirm order execution</button>
+              <button class="btn btn-danger pull-right" data-toggle = 'modal' data-target = '#reverseRequestRejModal' style="float:left;">Reject request</button>
           <?}elseif($order->orders_users->status == 1 && ($order->orders_users->user->id == Yii::$app->user->identity->id || $isUsersOrder)){
               ?><button class="btn btn-default pull-right disabled" style="float:left;">Order finished</button><?
               if(isset($commentModel)){
               ?>
               <button class="btn btn-success pull-right" data-toggle = 'modal' data-target = '#commentModal' style="float:left;">Comment</button><?
               }
+          }elseif($order->orders_users->status === 0){
+              ?><button class="btn btn-default pull-right disabled" style="float:left;">Order finished as unsuccessfull</button><?
           }?>
       </h2>
       <h5><span class="glyphicon glyphicon-time"></span> Post by <?=$order->user->login; ?>, <?=  Yii::$app->formatter->asDate($order->timePosted) ?></h5>
@@ -168,6 +171,8 @@ $this->registerJsFile('@web/js/rating.js');
         </div>
     </div>
 <?}?>
+
+<?if(!$isUsersOrder && !$isRequestSend){ ?>
     <!-- Request Modal -->
     <div class="modal fade" id="requestModal" role="dialog" style="position:fixed;">
         <div class="modal-dialog">
@@ -197,7 +202,8 @@ $this->registerJsFile('@web/js/rating.js');
 
         </div>
     </div>
-
+<?}?>
+<?if($isReqConfirmed && !$isRRequestSend && \app\models\Order::isUserExecutor(Yii::$app->user->identity->id, $order->id)){?>
     <!-- Request Modal -->
     <div class="modal fade" id="reverseRequestModal" role="dialog" style="position:fixed;">
         <div class="modal-dialog">
@@ -220,7 +226,9 @@ $this->registerJsFile('@web/js/rating.js');
 
         </div>
     </div>
+<?}?>
 
+<?if(!$isRRequestSend && $isUsersOrder){?>
     <!-- Request Confirm Modal -->
     <div class="modal fade" id="requestConfirmModal" role="dialog">
         <div class="modal-dialog">
@@ -272,7 +280,8 @@ $this->registerJsFile('@web/js/rating.js');
 
         </div>
     </div>
-
+<?}?>
+<?if($isRRequestSend && $isUsersOrder){?>
     <!-- Request Fulfillment confirm Modal -->
     <div class="modal fade" id="reverseRequestConfModal" role="dialog">
         <div class="modal-dialog">
@@ -298,4 +307,31 @@ $this->registerJsFile('@web/js/rating.js');
 
         </div>
     </div>
+
+    <!-- Request Fulfillment reject Modal -->
+    <div class="modal fade" id="reverseRequestRejModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">Order fulfillment reject</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-warning">
+                        <h4> Are you sure you want to reject order fulfillment request?</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <?= Html::a('Reject', 'fulfillment_reject?orderId='.$order->id, ['class' => 'modalCancelReqButton btn btn-danger']) ?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<?}?>
 </div>

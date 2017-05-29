@@ -29,7 +29,7 @@ class Registration extends Model {
             ->setTo($this->email)
             ->setFrom('betelgeuse1920@gmail.com')
             ->setSubject('Registration')
-            ->setTextBody('Confirm your registration by entering the link '.\Yii::$app->homeUrl.'web/delivery/registration_confirm?regCode='.$reg_code)
+            ->setTextBody('Confirm your registration by entering the link https://room217.herokuapp.com/web/delivery/registration_confirm?regCode='.$reg_code)
             ->send()){
                 return true;
         }
@@ -65,9 +65,9 @@ class Registration extends Model {
     public function registrationConfirm($regCode){
         $user = User::findOne(['reg_code' => $regCode]);
         if(isset($user)){
-            unset($user->reg_code);
-            $user->save();
-            return true;
+            $user->reg_code = null;
+            if($user->save())
+                return true;
         }
         return false;
     }

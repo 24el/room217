@@ -26,13 +26,24 @@ class Order extends Model{
             ['title', 'string', 'length' => [6, 150]],
             ['title', 'string', 'length' => [20, 1000]],
             ['price', 'integer', 'min' => '1', 'max' => '1000000'],
-            [['startHour', 'endHour'], 'integer', 'min' => '1', 'max' => '24'],
-            [['startMinutes', 'endMinutes'], 'integer', 'min' => '1', 'max' => '60'],
+            [['orderDate'], 'date', 'format' => 'Y-m-d'],
+            ['orderDate', 'validateOrderDate'],
+            [['startHour'], 'integer', 'min' => '0', 'max' => '23'],
+            [['endHour'], 'integer', 'min' => isset($this->startHour) ? $this->startHour.'' : '0', 'max' => '23'],
+            [['startMinutes'], 'integer', 'min' => '0', 'max' => '59'],
+            [['endMinutes'], 'integer', 'min' => ($this->startHour == $this->endHour) ? $this->startMinutes.'' : '0' , 'max' => '59'],
         ];
     }
     public function formName(){
         return 'addOrder-form';
     }
+
+    public function validateOrderDate($attribute, $params){
+        if($this->orderDate < date('Y-m-d')){
+            $this->addError($attribute, 'Date shouldnt refer to the past');
+        }
+    }
+
     public function addOrder(){
         $order = new Orders();
         $this->id = Orders::find()->select('id')->max('id') + 1;

@@ -71,6 +71,16 @@ class Request extends Model{
         }
         return false;
     }
+    public function rejectReverseRequest($orderId){
+        $order_usr = Orders_users::find()->where(['order_id' => $orderId])->andWhere(['status' => null])->one();
+        if(isset($order_usr)){
+            $order_usr->status = 0;
+            if($order_usr->save()){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public function getRequestsByOrderId($orderId){
         $queryRequest = Order_requests::find()->where(['order_id' => $orderId])->orderBy(['status' => SORT_ASC])->all();

@@ -78,7 +78,10 @@ class DeliveryOrders extends Model{
     }
 
     public function getHistoryOrders(){
-        $ordersId = Orders_users::find()->select('order_id')->where(['user_id' => \Yii::$app->user->identity->id])->andWhere(['status' => 1])->all();
+        $ordersId = Orders_users::find()->select('order_id')
+            ->where(['user_id' => \Yii::$app->user->identity->id])
+            ->andWhere(['status' => 1])
+            ->orWhere(['status' => 0])->all();
         $orders = array();
         if(isset($ordersId)){
             foreach($ordersId as $orderId){
@@ -93,7 +96,7 @@ class DeliveryOrders extends Model{
         $orders = array();
         if(isset($userOrders)){
             foreach($userOrders as $order){
-                if(Orders_users::find()->where(['order_id' => $order->id])->andWhere(['status' => 1])->exists()){
+                if($order->users_orders->status != null){
                     array_push($orders, $order);
                 }
             }

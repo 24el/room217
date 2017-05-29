@@ -208,6 +208,23 @@ class OrdersController extends Controller{
         }
     }
 
+    public function actionFulfillment_reject($orderId){
+        if(Order::isUsersOrder($orderId) && Order::isOrderInProcess($orderId)){
+            $model = new Request;
+            if($model->isReverseRequestSend($orderId)){
+                if($model->rejectReverseRequest($orderId)){
+                    Yii::$app->session->setFlash('success', 'Order finished as unsuccessfull!');
+                    return $this->redirect(Url::to(['orders/order', 'orderId' => $orderId]));
+                }else{
+                    Yii::$app->session->setFlash('Error', 'Something went wrong in order rejection!');
+                    return $this->redirect(Url::to(['orders/order', 'orderId' => $orderId]));
+                }
+            }
+        Yii::$app->session->setFlash('Error', 'Permission denied!');
+        return $this->redirect(Url::to(['orders/order', 'orderId' => $orderId]));
+        }
+    }
+
     public function actionFilter_orders(){
 
 
