@@ -20,6 +20,24 @@ use yii\web\OrderNotFoundException;
 
 class OrdersController extends Controller{
 
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['my_orders', 'add_order'],
+                'rules' => [
+                    [
+
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
+
     public function actions(){
         return [
             'error' => [
