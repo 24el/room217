@@ -23,7 +23,10 @@ class Request extends Model{
     }
 
     public function deleteRequest($orderId){
-        $request = Order_requests::find()->where(['order_id' => $orderId])->andWhere(['user_id' => \Yii::$app->user->identity->id])->one();
+        $request = Order_requests::find()
+            ->where(['order_id' => $orderId])
+            ->andWhere(['user_id' => \Yii::$app->user->identity->id])
+            ->one();
         if($request->status == null){
             $request->delete();
             return true;
@@ -46,23 +49,34 @@ class Request extends Model{
     }
 
     public function countUserOrdersRequests($userId = null){
-        $orders = Orders::find()->where(['userId' => isset($userId) ? $userId : \Yii::$app->user->identity->id])->all();
+        $orders = Orders::find()
+            ->where(['userId' => isset($userId) ? $userId : \Yii::$app->user->identity->id])
+            ->all();
         $ordersReqNum = array();
         if(isset($orders)){
             foreach($orders as $order){
-                $ordersReqNum[$order->id] = Order_requests::find()->where(['order_id' => $order->id])->andWhere(['status' => null])->count();
+                $ordersReqNum[$order->id] = Order_requests::find()
+                    ->where(['order_id' => $order->id])
+                    ->andWhere(['status' => null])
+                    ->count();
             }
         }
         return $ordersReqNum;
     }
 
     public function getRequestById($requestId){
-        $request = Order_requests::find()->where(['id' => $requestId])->andWhere(['status' => null])->one();
+        $request = Order_requests::find()
+            ->where(['id' => $requestId])
+            ->andWhere(['status' => null])
+            ->one();
         return $request;
     }
 
     public function confirmReverseRequest($orderId){
-        $order_usr = Orders_users::find()->where(['order_id' => $orderId])->andWhere(['status' => null])->one();
+        $order_usr = Orders_users::find()
+            ->where(['order_id' => $orderId])
+            ->andWhere(['status' => null])
+            ->one();
         if(isset($order_usr)){
             $order_usr->status = 1;
             if($order_usr->save()){
@@ -72,7 +86,10 @@ class Request extends Model{
         return false;
     }
     public function rejectReverseRequest($orderId){
-        $order_usr = Orders_users::find()->where(['order_id' => $orderId])->andWhere(['status' => null])->one();
+        $order_usr = Orders_users::find()
+            ->where(['order_id' => $orderId])
+            ->andWhere(['status' => null])
+            ->one();
         if(isset($order_usr)){
             $order_usr->status = 0;
             if($order_usr->save()){
@@ -108,7 +125,10 @@ class Request extends Model{
                 $confRequest->user_id = $request->user_id;
                 $confRequest->order_id = $request->order_id;
                 if($confRequest->save()){
-                    $requests = Order_requests::find()->where(['order_id' => $orderId])->andWhere(['status' => null])->all();
+                    $requests = Order_requests::find()
+                        ->where(['order_id' => $orderId])
+                        ->andWhere(['status' => null])
+                        ->all();
                     if(isset($requests)){
                         foreach($requests as $req){
                             $req->status = "deny";
@@ -133,7 +153,10 @@ class Request extends Model{
 
     public function isReverseRequestSend($orderId){
         if(Order::isOrderInProcess($orderId)){
-            $RReq = Order_requests::find()->where(['order_id' => $orderId])->andWhere(['status' => null])->exists();
+            $RReq = Order_requests::find()
+                ->where(['order_id' => $orderId])
+                ->andWhere(['status' => null])
+                ->exists();
             return $RReq;
         }
         return false;
@@ -159,8 +182,10 @@ class Request extends Model{
         return false;
     }
 
-    public static function hasUserRequest($orderId){
-        $perm = Order_requests::find()->where(['order_id' => $orderId])->andWhere(['user_id' => \Yii::$app->user->identity->id])->exists();
+    public static function hasUserRequest($orderId, $userId = null){
+        $perm = Order_requests::find()->where(['order_id' => $orderId])
+            ->andWhere(['user_id' => isset($userId) ? $userId : \Yii::$app->user->identity->id])
+            ->exists();
         return $perm;
     }
 }

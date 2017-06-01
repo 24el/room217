@@ -6,7 +6,7 @@ $(document).ready(function(){
         var time = getTime($("#timeHHField").val(), $("#timeMMField").val());
         var price = $('#priceField').val();
         var search = $('#searchField').val();
-        $(location).attr('href', '?r=orders%2Factive_orders&orderBy='+sortMethod+
+        $(location).attr('href', '?orderBy='+sortMethod+
             ((date != '' && date !='дд.мм.гггг') ? '&date='+date.replace('.', '-') : '')+
             (time != '::00' ? '&time='+time : '')+
             (price != '' ? '&price='+price : '')+
@@ -35,7 +35,7 @@ $(document).ready(function(){
         var time = getTime($("#timeHHField").val(), $("#timeMMField").val());
         var price = $('#priceField').val();
         var search = $('#searchField').val();
-        $(location).attr('href', '?r=orders%2Factive_orders&orderBy='+sortMethod+
+        $(location).attr('href', '?orderBy='+sortMethod+
             ((date != '' && date !='дд.мм.гггг') ? '&date='+date.replace('.', '-') : '')+
             (time != '::00' ? '&time='+time : '')+
             (price != '' ? '&price='+price : '')+

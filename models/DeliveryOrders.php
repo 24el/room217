@@ -22,28 +22,28 @@ class DeliveryOrders extends Model{
         ];
     }
 
-    public function getOrders($sortMethod = null, $date, $time, $price, $search){
+    public function getOrders($sortMethod = null, $date = null, $time = null, $price = null, $search = null){
 
             $orders = Orders::find()->select('orders.*, user.customer_rating')->innerJoin('user', 'orders.userId = user.id')
                 ->where(['>=', 'orderDate', date('Y-m-d')]);
 
             if(isset($this->offset)){
-                $orders->offset($this->offset);
+                $orders =  $orders->offset($this->offset);
             }
             if(!\Yii::$app->user->isGuest){
-                $orders->andWhere(['orders.city' => \Yii::$app->user->identity->city]);
+                $orders =  $orders->andWhere(['orders.city' => \Yii::$app->user->identity->city]);
             }
             if(isset($date)){
-                $orders->andWhere(['orderDate' => $date]);
+                $orders =  $orders->andWhere(['orderDate' => $date]);
             }
             if(isset($time)){
-                $orders->andWhere(['>', 'timeMin', $time]);
+                $orders = $orders->andWhere(['>', 'timeMin', $time]);
             }
             if(isset($price)){
-                $orders->andWhere(['>', 'price', $price]);
+                $orders = $orders->andWhere(['>', 'price', $price]);
             }
             if(isset($search)){
-                $orders->andWhere(['like', 'Title', $search])->orWhere(['like', 'orders.description', $search]);
+                $orders = $orders->andWhere(['like', 'Title', $search])->orWhere(['like', 'orders.description', $search]);
             }
             if(isset($sortMethod)){
                 if($sortMethod == 'new'){
@@ -81,7 +81,7 @@ class DeliveryOrders extends Model{
         $ordersId = Orders_users::find()->select('order_id')
             ->where(['user_id' => \Yii::$app->user->identity->id])
             ->andWhere(['status' => 1])
-            ->orWhere(['status' => 0])->all();
+            ->all();
         $orders = array();
         if(isset($ordersId)){
             foreach($ordersId as $orderId){
@@ -96,7 +96,7 @@ class DeliveryOrders extends Model{
         $orders = array();
         if(isset($userOrders)){
             foreach($userOrders as $order){
-                if($order->users_orders->status != null){
+                if($order->orders_users->status != null){
                     array_push($orders, $order);
                 }
             }

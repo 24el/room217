@@ -14,7 +14,6 @@ $this->registerJsFile('@web/js/activeOrders.js');
 <div class="container-fluid">
     <div class="row">
     <div class="col-lg-3">
-        <?php if(isset($orders[0])){ ?>
        <div class="mt-5" style="margin: 20px 20px 30px auto;"><?= Html::a('Add order', ['orders/add_order'],
                ['class' => 'btn btn-primary btn-block' , 'style' => 'margin:80px 5px 5px 10px;']);?></div>
 
@@ -40,13 +39,11 @@ $this->registerJsFile('@web/js/activeOrders.js');
                 <input type="text" id="searchField" value="<?= $filters['search'] ?>" placeholder="Search">
                 <p class="text-center"><input type="button" id="filterSubmitButton" class="btn btn-success" value="Search"></p>
 
-    </div>
-    <?}?>
-    </div>
+            </div>
+        </div>
 
     <div class="col-lg-7">
         <h2 class="text-center text-muted">Orders</h2>
-        <div class="row">
 
             <?php if(isset($orders[0])){ ?>
         <div class="pull-right" style="width:100px;">
@@ -59,7 +56,6 @@ $this->registerJsFile('@web/js/activeOrders.js');
         </select>
         </div>
             <h4 class="pull-right">Sort :</h4>
-        </div>
         <?php Pjax::begin(); ?>
 
         <?php foreach ($orders as $order): ?>
@@ -84,13 +80,10 @@ $this->registerJsFile('@web/js/activeOrders.js');
                     ['class' => 'btn btn-success text-center']);?></div>
         <?}?>
         <?= Html::a('Обновить', ['orders/filter_orders'], ['class' => 'hidden', 'id' => 'filterRefresh']) ?>
-        </div>
-
     </div>
     <div class="col-lg-2">
 
     </div>
 
-</div>
-
+    </div>
 </div>

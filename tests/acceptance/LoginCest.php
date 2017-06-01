@@ -16,7 +16,6 @@ class loginCest
         $I->wantTo('ensure that frontpage works');
         $I->amOnPage('/');
         $I->see('Orders');
-        $I->click('delivery/login');
     }
     public function loginAdminTest(AcceptanceTester $I)
     {
@@ -27,13 +26,12 @@ class loginCest
           'password' => 'admin'
         ]);
         $I->see('Orders');
-        $I->click('orders/add_order');
     }
 
     public function orderAddTest(AcceptanceTester $I)
     {
         $I->amOnPage('/orders/add_order');
-        $I->see('Order info');
+        $I->see('Order');
         $I->submitForm('#orderAdd-form', array(
             'Title' => 'sLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum',
             'orderDate' => '2017-05-13',

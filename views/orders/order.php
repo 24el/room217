@@ -152,9 +152,9 @@ $this->registerJsFile('@web/js/rating.js');
                     ]);
                     ?>
                     <?= $form->field($commentModel, 'text')->textArea();?>
-                    <?= $form->field($commentModel, 'rating')->hiddenInput(['id' => 'ratingField']);?>
+                    <?= $form->field($commentModel, 'rating')->hiddenInput(['id' => 'ratingField'])->label('Rating', ['class' => 'hidden']);?>
                     <label>Rating</label>
-                    <div class="pull-right rating">
+                    <div class="pull-right rating" data-id="<?=Yii::$app->request->baseUrl?>">
                     <?for($i=0; $i<10; $i++){
                         ?><img class="ratingStar" src="<?=Yii::$app->request->baseUrl?>/images/star.png"  width="20px" height="20px" data-id="<?= $i?>"><?
                     }?>
