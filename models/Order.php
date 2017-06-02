@@ -25,7 +25,6 @@ class Order extends Model{
             ['title', 'string', 'length' => [20, 1000]],
             ['price', 'integer', 'min' => '1', 'max' => '1000000'],
             [['orderDate'], 'date', 'format' => 'Y-m-d'],
-            ['orderDate', 'validateOrderDate'],
             [['startHour'], 'integer', 'min' => '0', 'max' => '23'],
             [['endHour'], 'integer', 'min' => isset($this->startHour) ? $this->startHour.'' : '0', 'max' => '23'],
             [['startMinutes'], 'integer', 'min' => '0', 'max' => '59'],
