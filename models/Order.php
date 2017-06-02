@@ -7,6 +7,8 @@ class Order extends Model{
     public $id;
     public $title;
     public $orderDate;
+     public $timeMin;
+    public $timeMax;
     public $description;
     public $price;
     public $startHour;
